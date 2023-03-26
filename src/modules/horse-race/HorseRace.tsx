@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import CardView from '../../components/CardView'
-import { GameContentSizeContext } from '../../components/PageView'
 import { Card } from '../../model/Card'
-import GridArea from '../../lib/react-common/grid/GridArea'
 import GridCell from '../../lib/react-common/grid/GridCell'
 import useHorseRaceGame from './useHorseRaceGame'
 import useGridModel from '../../lib/react-common/grid/useGridModel'
 import CardConfettiExplosion from '../../components/CardConfettiExplosion'
+import { GameContentSizeContext } from '../../components/MainWrapper'
+import { Page } from '../../components/Page'
+import GridArea from '../../lib/react-common/grid/GridArea'
 
 interface Props {
 }
@@ -73,8 +74,7 @@ export default function HorseRace({}: Props) {
   }
 
   return (
-    <div onClick={next}>
-
+    <Page style={{ background: 'green' }} onClick={next}>
       <GridArea width={size.width} height={size.height}>
         {Card.getColors().map((color, index) => (
 
@@ -89,7 +89,7 @@ export default function HorseRace({}: Props) {
         {getSideCards()}
         {getForwardCards()}
       </GridArea>
-    </div>
+    </Page>
   )
 }
 

@@ -11,35 +11,44 @@ const defaultGameContentDimension: Size = {
 
 export const GameContentSizeContext = createContext<Size>(defaultGameContentDimension)
 
+// noinspection CssReplaceWithShorthandSafely
 const Main = styled('div')`
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #3a3a3a;
+  background-color: black;
+  overflow: hidden;
+
+  & > div {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
 `
 
-export default function PageView({ children }: ChildrenProps) {
+export default function MainWrapper({ children }: ChildrenProps) {
 
   const [gameContentSize, setGameContentSize] = useState<Size>(defaultGameContentDimension)
 
   useEffect(() => {
-    const width = window.innerWidth
-    const height = window.innerHeight
+
+    const width = window.innerWidth - 32
+    const height = window.innerHeight - 32
     setGameContentSize({ width, height })
   }, [])
 
 
   return (
     <GameContentSizeContext.Provider value={gameContentSize}>
-      <Main>
-        <div style={{
-          width: `${gameContentSize.width}px`,
-          height: `${gameContentSize.height}px`,
-          position: 'relative',
-          background: 'green'
-        }}>
+      <Main style={{
+        width: `${gameContentSize.width + 32}px`,
+        height: `${gameContentSize.height + 32}px`
+      }}>
+        <div>
           {children}
         </div>
       </Main>

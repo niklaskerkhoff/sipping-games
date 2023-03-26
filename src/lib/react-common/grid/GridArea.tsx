@@ -10,12 +10,13 @@ interface Props extends ChildrenProps {
 
 
 const Wrapper = styled('div')`
+  position: relative;
 `
 
 export default function GridArea({ width, height, children }: Props) {
 
   return (
-    <Wrapper style={{ width: `${width}px`, height: `${height}px` }}>
+    <Wrapper style={{ width: `${width}px`, height: `${height}px`}}>
       {children}
     </Wrapper>
   )

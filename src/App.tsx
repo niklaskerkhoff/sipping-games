@@ -1,15 +1,15 @@
 import React, { ReactNode, useState } from 'react'
 import Home from './modules/home/Home'
 import HorseRace from './modules/horse-race/HorseRace'
-import PageView from './components/PageView'
+import MainWrapper from './components/MainWrapper'
 
-export type Page = 'home' | 'horse-race' | 'bus-driver' | 'fuck-the-dealer'
+export type PageName = 'home' | 'horse-race' | 'bus-driver' | 'fuck-the-dealer'
 
 export default function App() {
 
-  const [currentGame, setCurrentGame] = useState<Page>('horse-race')
+  const [currentGame, setCurrentGame] = useState<PageName>('horse-race')
 
-  const pages: { [key in Page]: ReactNode } = {
+  const pageNames: { [key in PageName]: ReactNode } = {
     'home': <Home navigate={setCurrentGame} />,
     'horse-race': <HorseRace />,
     'bus-driver': <></>,
@@ -17,9 +17,9 @@ export default function App() {
   }
 
   return (
-    <PageView>
-      {pages[currentGame]}
-    </PageView>
+    <MainWrapper>
+      {pageNames[currentGame]}
+    </MainWrapper>
   )
 }
 

@@ -10,9 +10,13 @@ export default function useHorseRaceGame(sideCardCount: number) {
   const [forwardCardsOpenedCount, setForwardCardsOpenedCount] = useState(game.forwardCardsOpenedCount)
   const [sideCardsOpenedCount, setSideCardsOpenedCount] = useState(game.sideCardsOpenedCount)
   const [finished, setFinished] = useState(Card.mapColorsToDefault(false))
-
+  const canDoNext = useRef(true)
 
   function next() {
+    if (!canDoNext.current) {
+      return
+    }
+    canDoNext.current = false
     game.nextDeckCard()
     setForwardCardsOpenedCount(game.forwardCardsOpenedCount)
 
@@ -37,7 +41,10 @@ export default function useHorseRaceGame(sideCardCount: number) {
 
         setTimeout(() => {
           setProgress({ ...game.progress })
+          canDoNext.current = true
         }, 700)
+      } else {
+        canDoNext.current = true
       }
     }, 700)
   }
