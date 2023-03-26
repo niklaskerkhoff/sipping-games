@@ -6,6 +6,7 @@ import GridArea from '../../lib/react-common/grid/GridArea'
 import GridCell from '../../lib/react-common/grid/GridCell'
 import useHorseRaceGame from './useHorseRaceGame'
 import useGridModel from '../../lib/react-common/grid/useGridModel'
+import CardConfettiExplosion from '../../components/CardConfettiExplosion'
 
 interface Props {
 }
@@ -13,22 +14,21 @@ interface Props {
 
 export default function HorseRace({}: Props) {
 
-  const sideCardNumber = 7
-  const rows = sideCardNumber + 2
+  const sideCardCount = 7
+  const rows = sideCardCount + 2
   const cols = 5
   const size = useContext(GameContentSizeContext)
 
   const gridModel = useGridModel(size.width, size.height, cols, rows)
-
-  const cardHeight = size.height / (sideCardNumber + 2) - 8
+  const cardHeight = size.height / (sideCardCount + 2) - 8
 
   const {
     sideCards,
     next,
     progress,
+    finished,
     isSideCardCovered
-  } = useHorseRaceGame()
-
+  } = useHorseRaceGame(sideCardCount)
 
 
   function getSideCards() {
@@ -48,6 +48,7 @@ export default function HorseRace({}: Props) {
 
   return (
     <div onClick={next}>
+
       <GridArea width={size.width} height={size.height}>
         {Card.getColors().map((color, index) => (
 
@@ -55,6 +56,7 @@ export default function HorseRace({}: Props) {
                     col={index}
                     row={progress[color].actual}>
             <CardView card={new Card('A', color)} height={cardHeight} />
+            {finished[color] && <CardConfettiExplosion />}
           </GridCell>
         ))}
 
@@ -63,3 +65,4 @@ export default function HorseRace({}: Props) {
     </div>
   )
 }
+

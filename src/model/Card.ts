@@ -19,6 +19,20 @@ export class Card {
     ]
   }
 
+  static mapColorsToDefault<T>(defaultValue: T) {
+    return Card.mapColors(() => defaultValue)
+  }
+
+  static mapColors<T>(mapper: (color: Color) => T) {
+    return {
+      'D': mapper('D'),
+      'H': mapper('H'),
+      'S': mapper('S'),
+      'C': mapper('C'),
+    }
+  }
+
+
   equals(other: Card) {
     return this.rank === other.rank && this.color === other.color
   }

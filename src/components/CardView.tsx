@@ -16,6 +16,9 @@ interface Props {
 
 const Wrapper = styled('div')`
   perspective: 1000px;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 
   .flip-card-inner {
     position: relative;

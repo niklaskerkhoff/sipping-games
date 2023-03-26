@@ -1,6 +1,7 @@
 import { Card, Color } from '../../model/Card'
 import { Deck } from '../../model/Deck'
 import { range } from '../../lib/common/utils/arrays'
+import { isPresent } from '../../lib/common/utils/types'
 
 
 export class HorseRaceGame {
@@ -22,12 +23,7 @@ export class HorseRaceGame {
       finished: false
     }
 
-    return {
-      D: defaultColorProgress,
-      H: defaultColorProgress,
-      S: defaultColorProgress,
-      C: defaultColorProgress
-    }
+    return Card.mapColorsToDefault(defaultColorProgress)
   }
 
   nextDeckCard() {
@@ -46,7 +42,13 @@ export class HorseRaceGame {
 
     this.sideCardsOpenCount++
     const backColor = this.getLastOpenedSideCardColor()
-    this.progress[backColor] = this.getMovedBackward(backColor)
+    if (isPresent(backColor)) {
+      this.progress[backColor] = this.getMovedBackward(backColor)
+    }
+  }
+
+  getFinished() {
+    return Card.mapColors(color => this.progress[color].finished)
   }
 
   private getMovedForward(color: Color): ColorProgress {
@@ -72,7 +74,11 @@ export class HorseRaceGame {
   }
 
   private getLastOpenedSideCardColor() {
-    return this.sideCards[this.sideCardsOpenCount - 1].color
+    const index = this.sideCardsOpenCount - 1
+    if (index >= this.sideCards.length) {
+      return undefined
+    }
+    return this.sideCards[index].color
   }
 
   private getMovedBackward(color: Color): ColorProgress {
