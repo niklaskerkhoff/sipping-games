@@ -6,7 +6,8 @@ import { ChildrenProps } from '../utils/types'
 interface Props extends ChildrenProps {
   gridModel: GridModel,
   col: number,
-  row: number
+  row: number,
+  zIndex?: number
 }
 
 const Wrapper = styled('div')`
@@ -20,7 +21,13 @@ const Wrapper = styled('div')`
   transition: transform 500ms;
 `
 
-export default function GridCell({ gridModel, col, row, children }: Props) {
+export default function GridCell({
+                                   gridModel,
+                                   col,
+                                   row,
+                                   zIndex,
+                                   children
+                                 }: Props) {
 
   function buildStyle(): CSSProperties {
     const cellSize = gridModel.getCellSize()
@@ -34,7 +41,8 @@ export default function GridCell({ gridModel, col, row, children }: Props) {
     return ({
       width: `${width}px`,
       height: `${height}px`,
-      transform: `translate(${x}px, ${y}px)`
+      transform: `translate(${x}px, ${y}px)`,
+      zIndex
     })
   }
 

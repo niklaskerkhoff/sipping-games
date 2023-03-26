@@ -7,22 +7,33 @@ export default function useHorseRaceGame(sideCardCount: number) {
   const game = useRef(new HorseRaceGame(new Deck(), sideCardCount)).current
 
   const [progress, setProgress] = useState(game.progress)
-  const [sideCardsOpenCount, setSideCardsOpenCount] = useState(game.sideCardsOpenCount)
+  const [forwardCardsOpenedCount, setForwardCardsOpenedCount] = useState(game.forwardCardsOpenedCount)
+  const [sideCardsOpenedCount, setSideCardsOpenedCount] = useState(game.sideCardsOpenedCount)
   const [finished, setFinished] = useState(Card.mapColorsToDefault(false))
 
 
   function next() {
     game.nextDeckCard()
-    setProgress({ ...game.progress })
+    setForwardCardsOpenedCount(game.forwardCardsOpenedCount)
 
+    setTimeout(() => {
+      setProgress({ ...game.progress })
+      handleFinished()
+      handleNextSideCard()
+    }, 700)
+  }
+
+  function handleFinished() {
     setTimeout(() => {
       setFinished(game.getFinished())
     }, 300)
+  }
 
+  function handleNextSideCard() {
     setTimeout(() => {
       game.nextSideCard()
-      if (game.sideCardsOpenCount !== sideCardsOpenCount) {
-        setSideCardsOpenCount(game.sideCardsOpenCount)
+      if (game.sideCardsOpenedCount !== sideCardsOpenedCount) {
+        setSideCardsOpenedCount(game.sideCardsOpenedCount)
 
         setTimeout(() => {
           setProgress({ ...game.progress })
@@ -32,13 +43,15 @@ export default function useHorseRaceGame(sideCardCount: number) {
   }
 
   function isSideCardCovered(index: number) {
-    return !(index < sideCardsOpenCount)
+    return !(index < sideCardsOpenedCount)
   }
 
   return {
     sideCards: game.sideCards,
+    forwardCards: game.forwardCards,
+    forwardCardsOpenedCount: forwardCardsOpenedCount,
     progress,
-    sideCardsOpenCount,
+    sideCardsOpenCount: sideCardsOpenedCount,
     finished,
     next,
     isSideCardCovered

@@ -2,25 +2,28 @@ import { Card, get52Cards } from './Card'
 import { randomInt } from '../lib/common/utils/random'
 
 export class Deck {
-
-  private cards: Card[]
-
   constructor() {
-    this.cards = this.get52ShuffledCards()
+    this._cards = this.get52ShuffledCards()
+  }
+
+  private _cards: Card[]
+
+  get cards(): Card[] {
+    return [...this._cards]
   }
 
   public draw() {
-    const card = this.cards[0]
-    this.cards = this.cards.slice(1)
+    const card = this._cards[0]
+    this._cards = this._cards.slice(1)
     return card
   }
 
   public remove(card: Card) {
-    this.cards = this.cards.filter(c => !c.equals(card))
+    this._cards = this._cards.filter(c => !c.equals(card))
   }
 
   public isEmpty() {
-    return this.cards.length === 0
+    return this._cards.length === 0
   }
 
   private get52ShuffledCards() {

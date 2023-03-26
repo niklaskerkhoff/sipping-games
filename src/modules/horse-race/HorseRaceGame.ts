@@ -7,13 +7,22 @@ import { isPresent } from '../../lib/common/utils/types'
 export class HorseRaceGame {
   public readonly progress = HorseRaceGame.getDefaultProgress()
   public readonly sideCards: Card[]
-  public sideCardsOpenCount = 0
+  public sideCardsOpenedCount = 0
+  public readonly forwardCards: Card[]
 
   constructor(
     private readonly deck: Deck,
     sideCardCount: number
   ) {
+    Card.getColors().forEach(color => deck.remove(new Card('A', color)))
     this.sideCards = range(0, sideCardCount).map(() => deck.draw())
+    this.forwardCards = deck.cards
+  }
+
+  private _forwardCardsOpenedCount = 0
+
+  get forwardCardsOpenedCount(): number {
+    return this._forwardCardsOpenedCount
   }
 
   private static getDefaultProgress(): Progress {
@@ -32,6 +41,7 @@ export class HorseRaceGame {
     }
 
     const color = this.deck.draw().color
+    this._forwardCardsOpenedCount++
     this.progress[color] = this.getMovedForward(color)
   }
 
@@ -40,7 +50,7 @@ export class HorseRaceGame {
       return
     }
 
-    this.sideCardsOpenCount++
+    this.sideCardsOpenedCount++
     const backColor = this.getLastOpenedSideCardColor()
     if (isPresent(backColor)) {
       this.progress[backColor] = this.getMovedBackward(backColor)
@@ -70,11 +80,11 @@ export class HorseRaceGame {
     const nextCount = Object.values(this.progress).reduce(
       (acc, current) => Math.min(acc, current.max), Infinity)
 
-    return nextCount > this.sideCardsOpenCount
+    return nextCount > this.sideCardsOpenedCount
   }
 
   private getLastOpenedSideCardColor() {
-    const index = this.sideCardsOpenCount - 1
+    const index = this.sideCardsOpenedCount - 1
     if (index >= this.sideCards.length) {
       return undefined
     }

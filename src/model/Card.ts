@@ -37,7 +37,7 @@ export class Card {
     return this.rank === other.rank && this.color === other.color
   }
 
-  getId() {
+  getId(): string {
     return this.rank + this.color
   }
 }

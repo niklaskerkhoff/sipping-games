@@ -16,7 +16,7 @@ export default function HorseRace({}: Props) {
 
   const sideCardCount = 7
   const rows = sideCardCount + 2
-  const cols = 5
+  const cols = 6
   const size = useContext(GameContentSizeContext)
 
   const gridModel = useGridModel(size.width, size.height, cols, rows)
@@ -24,6 +24,8 @@ export default function HorseRace({}: Props) {
 
   const {
     sideCards,
+    forwardCards,
+    forwardCardsOpenedCount,
     next,
     progress,
     finished,
@@ -46,6 +48,30 @@ export default function HorseRace({}: Props) {
     })
   }
 
+  function getForwardCards() {
+
+    function isOpen(index: number) {
+      return forwardCards.length - index <= forwardCardsOpenedCount
+    }
+
+    function getRow(index: number) {
+      return isOpen(index) ? rows / 2 : (rows - 2) / 2
+    }
+
+    function getZIndex(index: number) {
+      return isOpen(index) ? forwardCards.length - index : 0
+    }
+
+    return forwardCards.reverse().map((card, index) => (
+      <GridCell key={index} gridModel={gridModel}
+                col={0}
+                row={getRow(index)}
+                zIndex={getZIndex(index)}>
+        <CardView card={card} height={cardHeight} covered={!isOpen(index)} />
+      </GridCell>
+    ))
+  }
+
   return (
     <div onClick={next}>
 
@@ -53,7 +79,7 @@ export default function HorseRace({}: Props) {
         {Card.getColors().map((color, index) => (
 
           <GridCell key={index} gridModel={gridModel}
-                    col={index}
+                    col={index + 1}
                     row={progress[color].actual}>
             <CardView card={new Card('A', color)} height={cardHeight} />
             {finished[color] && <CardConfettiExplosion />}
@@ -61,6 +87,7 @@ export default function HorseRace({}: Props) {
         ))}
 
         {getSideCards()}
+        {getForwardCards()}
       </GridArea>
     </div>
   )
