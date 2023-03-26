@@ -17,7 +17,7 @@ const Wrapper = styled('div')`
   justify-content: center;
   align-items: center;
   overflow: visible;
-  transform: translate();
+  transition: transform 500ms;
 `
 
 export default function GridCell({ gridModel, col, row, children }: Props) {

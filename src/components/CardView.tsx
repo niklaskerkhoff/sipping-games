@@ -22,7 +22,7 @@ const Wrapper = styled('div')`
     width: 100%;
     height: 100%;
     text-align: center;
-    transition: transform 0.6s;
+    transition: transform 500ms;
     transform-style: preserve-3d;
     border-radius: 8px;
   }

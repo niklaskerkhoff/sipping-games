@@ -18,7 +18,8 @@ export class HorseRaceGame {
   private static getDefaultProgress(): Progress {
     const defaultColorProgress: ColorProgress = {
       actual: 0,
-      max: 0
+      max: 0,
+      finished: false
     }
 
     return {
@@ -51,11 +52,16 @@ export class HorseRaceGame {
   private getMovedForward(color: Color): ColorProgress {
     const prevColorProgress = this.progress[color]
 
+    if (prevColorProgress.finished) {
+      return prevColorProgress
+    }
+
     const actual = prevColorProgress.actual + 1
     const prevMax = prevColorProgress.max
     const max = Math.max(actual, prevMax)
+    const finished = actual >= this.sideCards.length + 1
 
-    return { actual, max }
+    return { actual, max, finished }
   }
 
   private shallOpenNextSideCard() {
@@ -71,15 +77,20 @@ export class HorseRaceGame {
 
   private getMovedBackward(color: Color): ColorProgress {
     const prevColorProgress = this.progress[color]
+
+    if (prevColorProgress.finished) {
+      return prevColorProgress
+    }
+
     const actual = prevColorProgress.actual - 1
-    const max = prevColorProgress.max
-    return { actual, max }
+    return { ...prevColorProgress, actual }
   }
 }
 
 interface ColorProgress {
   actual: number,
-  max: number
+  max: number,
+  finished: boolean
 }
 
 type Progress = { [color in Color]: ColorProgress }

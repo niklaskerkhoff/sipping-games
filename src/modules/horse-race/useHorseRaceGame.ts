@@ -17,9 +17,12 @@ export default function useHorseRaceGame() {
       game.nextSideCard()
       if (game.sideCardsOpenCount !== sideCardsOpenCount) {
         setSideCardsOpenCount(game.sideCardsOpenCount)
-        setProgress({ ...game.progress })
+
+        setTimeout(() => {
+          setProgress({ ...game.progress })
+        }, 700)
       }
-    }, 1000)
+    }, 700)
   }
 
   function isSideCardCovered(index: number) {
