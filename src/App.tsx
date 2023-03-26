@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { ReactNode, useState } from 'react'
+import Home from './modules/home/Home'
+import HorseRace from './modules/horse-race/HorseRace'
+import PageView from './components/PageView'
 
-function App() {
+export type Page = 'home' | 'horse-race' | 'bus-driver' | 'fuck-the-dealer'
+
+export default function App() {
+
+  const [currentGame, setCurrentGame] = useState<Page>('horse-race')
+
+  const pages: { [key in Page]: ReactNode } = {
+    'home': <Home navigate={setCurrentGame} />,
+    'horse-race': <HorseRace />,
+    'bus-driver': <></>,
+    'fuck-the-dealer': <></>
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <PageView>
+      {pages[currentGame]}
+    </PageView>
+  )
 }
 
-export default App;
