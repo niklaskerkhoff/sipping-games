@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  web:
+    image: nginx:1.23-alpine
+    restart: always
+    container_name: sipping-games
+    volumes:
+      - ./site.conf:/etc/nginx/conf.d/default.conf
+      - ./build:/usr/share/nginx/html
+    networks:
+      - traefik
+      - default
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.sipping_games.rule=Host(`sipping-games.nikstack.de`)'
+      - 'traefik.http.routers.sipping_games.entrypoints=web,websecure'
+      - 'traefik.http.services.sipping_games.loadbalancer.server.port=80'
+
+networks:
+  traefik:
+    external: true
