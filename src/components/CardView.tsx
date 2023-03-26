@@ -93,7 +93,7 @@ export default function CardView({
              style={{ width: `${width}px`, height: `${height}px` }}>
       <div className='flip-card-inner'>
         <div className='flip-card-front'>
-          <img src={`/res/cards/${card.rank}${card.color}.svg`} alt='' />
+          <img src={`/res/cards/${card.getId()}.svg`} alt='' />
         </div>
         <div className='flip-card-back'>
           <img src='/res/cards/back.png' alt='' />
