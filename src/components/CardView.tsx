@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { CSSProperties, useContext } from 'react'
 import { Card } from '../model/Card'
 import { styled } from '@mui/material'
 import { isNotPresent } from '../lib/common/utils/types'
 import classNames from 'classnames'
+import { BackgroundImageDataContext } from '../App'
 
 type Orientation = 0 | 90 | 180 | 270
 
@@ -52,23 +53,19 @@ const Wrapper = styled('div')`
 
   .flip-card-back {
     transform: rotateY(180deg);
-    
+
     div.background-image {
       position: absolute;
-      top: 8px;
-      left: 8px;
-      width: calc(100% - 16px);
-      height: calc(100% - 16px);
-      background-image: url("/res/background.jpeg");
+      top: 4px;
+      left: 4px;
+      width: calc(100% - 8px);
+      height: calc(100% - 8px);
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
+      border-radius: 4px;
     }
   }
-`
-
-
-const CardContainer = styled('div')`
 `
 
 export default function CardView({
@@ -78,6 +75,13 @@ export default function CardView({
                                    orientation,
                                    covered
                                  }: Props) {
+
+  const backgroundImageData = useContext(BackgroundImageDataContext)
+
+  const backgroundImageStyle: CSSProperties = {
+    backgroundImage: `url(${backgroundImageData})`
+  }
+
   if (isNotPresent(orientation)) {
     orientation = 0
   }
@@ -110,7 +114,8 @@ export default function CardView({
         <div className='flip-card-back'>
           <img src='/res/cards/back.png' alt='' />
 
-          <div className='background-image'></div>
+          <div className='background-image camera'
+               style={backgroundImageStyle} />
         </div>
       </div>
     </Wrapper>
