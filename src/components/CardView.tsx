@@ -52,6 +52,18 @@ const Wrapper = styled('div')`
 
   .flip-card-back {
     transform: rotateY(180deg);
+    
+    div.background-image {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: calc(100% - 16px);
+      height: calc(100% - 16px);
+      background-image: url("/res/background.jpeg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
   }
 `
 
@@ -97,6 +109,8 @@ export default function CardView({
         </div>
         <div className='flip-card-back'>
           <img src='/res/cards/back.png' alt='' />
+
+          <div className='background-image'></div>
         </div>
       </div>
     </Wrapper>
