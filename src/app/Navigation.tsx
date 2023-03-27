@@ -1,5 +1,12 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react'
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useRef,
+  useState
+} from 'react'
 import MainWrapper from '../components/MainWrapper'
+import { isPresent } from '../lib/common/utils/types'
 
 
 export type PageName =
@@ -12,14 +19,16 @@ export type PageName =
 
 type Navigator = {
   current: PageName,
-  navigate: (pageName: PageName) => void
+  navigate: (pageName: PageName) => void,
+  navigateBack: () => void
 }
 
-const startPage: PageName = 'home'
+const startPage: PageName = 'horse-race'
 
 const NavigatorContext = createContext<Navigator>({
   current: startPage,
-  navigate: () => null
+  navigate: () => null,
+  navigateBack: () => null
 })
 
 
@@ -30,14 +39,26 @@ interface Props {
 
 export function Navigation({ pages }: Props) {
   const [current, setCurrent] = useState<PageName>(startPage)
-
+  const history = useRef<PageName[]>([startPage])
 
   function navigate(pageName: PageName) {
+    history.current.push(pageName)
     setCurrent(pageName)
   }
 
+  function navigateBack() {
+    const self = history.current.pop()
+    if (!isPresent(self)) {
+      return
+    }
+    const next = history.current.pop()
+    if (isPresent(next)) {
+      navigate(next)
+    }
+  }
+
   return (
-    <NavigatorContext.Provider value={{ current, navigate }}>
+    <NavigatorContext.Provider value={{ current, navigate, navigateBack }}>
       <MainWrapper>
         {pages[current]}
       </MainWrapper>

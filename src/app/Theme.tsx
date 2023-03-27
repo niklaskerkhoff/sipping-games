@@ -17,9 +17,9 @@ const themeOptions: ThemeOptions = {
       dark: '#455a64',
     },
     info: {
-      main: '#005a00',
-      light: '#32b400',
-      dark: '#004600',
+      main: '#000000',
+      light: '#000000',
+      dark: '#000000',
     },
     background: {
       default: '#005a00',

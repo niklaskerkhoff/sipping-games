@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react'
 import { Card } from '../../model/Card'
-import useCallOnce from '../../lib/react-common/hooks/useCallOnce'
 import { HorseRaceGameContainer } from './HorseRaceGameContainer'
 
 export default function useHorseRaceGame() {
@@ -12,9 +11,6 @@ export default function useHorseRaceGame() {
   const [finished, setFinished] = useState(Card.mapColorsToDefault(false))
   const canDoNext = useRef(true)
 
-  useCallOnce(() => {
-    // console.log(game.forwardCards)
-  })
 
   function next() {
     if (!canDoNext.current) {

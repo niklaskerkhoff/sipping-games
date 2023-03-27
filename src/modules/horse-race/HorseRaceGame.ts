@@ -15,7 +15,6 @@ export class HorseRaceGame {
     private readonly deck: Deck,
     sideCardCount: number
   ) {
-    console.log('game')
     Card.getColors().forEach(color => deck.remove(new Card('A', color)))
     this.sideCards = range(0, sideCardCount).map(() => deck.draw())
     this.forwardCards = deck.cards
@@ -43,7 +42,6 @@ export class HorseRaceGame {
     }
 
     const card = this.deck.draw()
-    // console.log(card)
     const color = card.color
     this._forwardCardsOpenedCount++
     this.progress[color] = this.getMovedForward(color)

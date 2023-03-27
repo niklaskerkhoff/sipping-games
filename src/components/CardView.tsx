@@ -78,7 +78,7 @@ export default function CardView({
 
   let backgroundImageData = useContext(BackgroundImageDataContext)
 
-  if (isNotPresent(backgroundImageData) || backgroundImageData.length < 100) {
+  if (isNotPresent(backgroundImageData) || backgroundImageData.length < 10000) {
     backgroundImageData = '/res/background.jpg'
   }
 
