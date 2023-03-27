@@ -31,7 +31,7 @@ export default function HorseRace({}: Props) {
     progress,
     finished,
     isSideCardCovered
-  } = useHorseRaceGame(sideCardCount)
+  } = useHorseRaceGame()
 
 
   function getSideCards() {
@@ -63,7 +63,7 @@ export default function HorseRace({}: Props) {
       return isOpen(index) ? forwardCards.length - index : 0
     }
 
-    return forwardCards.reverse().map((card, index) => (
+    return forwardCards.map((card, index) => (
       <GridCell key={index} gridModel={gridModel}
                 col={0}
                 row={getRow(index)}

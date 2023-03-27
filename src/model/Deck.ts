@@ -13,9 +13,9 @@ export class Deck {
   }
 
   public draw() {
-    // console.log(this._cards)
-    const card = this._cards[0]
-    this._cards = this._cards.slice(1)
+    const lastIndex = this._cards.length - 1
+    const card = this._cards[lastIndex]
+    this._cards = this._cards.slice(0, lastIndex)
     return card
   }
 

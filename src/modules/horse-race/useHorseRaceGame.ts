@@ -3,9 +3,8 @@ import { Card } from '../../model/Card'
 import useCallOnce from '../../lib/react-common/hooks/useCallOnce'
 import { HorseRaceGameContainer } from './HorseRaceGameContainer'
 
-export default function useHorseRaceGame(sideCardCount: number) {
+export default function useHorseRaceGame() {
   const game = useRef(HorseRaceGameContainer.get()).current
-  console.log(game.random)
 
   const [progress, setProgress] = useState(game.progress)
   const [forwardCardsOpenedCount, setForwardCardsOpenedCount] = useState(game.forwardCardsOpenedCount)
