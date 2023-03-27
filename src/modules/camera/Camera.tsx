@@ -21,9 +21,6 @@ export default function Camera({ setBackgroundImageData }: Props) {
 
   const stopCamera = useRef<() => void>(() => null)
 
-  console.log('hier')
-
-
   async function startCamera() {
     if (isNotPresent(videoRef.current)) {
       return
@@ -54,8 +51,6 @@ export default function Camera({ setBackgroundImageData }: Props) {
     canvas.getContext('2d')?.drawImage(video, 0, 0, canvas.width, canvas.height)
     let imageData = canvas.toDataURL('image/jpeg')
 
-    // data url of the image
-    console.log(imageData)
     setBackgroundImageData(imageData)
     setView('photoViewer')
   }

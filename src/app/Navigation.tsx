@@ -23,7 +23,7 @@ type Navigator = {
   navigateBack: () => void
 }
 
-const startPage: PageName = 'horse-race'
+const startPage: PageName = 'home'
 
 const NavigatorContext = createContext<Navigator>({
   current: startPage,

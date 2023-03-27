@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Page } from '../../components/Page'
-import useNavigation from '../../app/Navigation'
+import useNavigation, { PageName } from '../../app/Navigation'
 import FlexSpacer from '../../components/FlexSpacer'
 import { Paper, styled } from '@mui/material'
+import { BackgroundImageDataContext } from '../../app/App'
+import { isNotPresent } from '../../lib/common/utils/types'
 
 
 const Main = styled('div')`
@@ -72,7 +74,7 @@ const GameLink = styled(Paper)`
   background-repeat: no-repeat;
 
 
-  height: 120px;
+  height: 140px;
   display: flex;
   align-items: end;
   padding: 8px;
@@ -82,6 +84,14 @@ const GameLink = styled(Paper)`
 export default function Home() {
 
   const { navigate } = useNavigation()
+  const backgroundImageData = useContext(BackgroundImageDataContext)
+
+  function startGame(game: PageName) {
+    navigate(game)
+    if (isNotPresent(backgroundImageData)) {
+      navigate('camera')
+    }
+  }
 
   return (
     <Page>
@@ -98,7 +108,7 @@ export default function Home() {
 
         <section>
 
-          <GameLink elevation={3} onClick={() => navigate('horse-race')}>
+          <GameLink elevation={3} onClick={() => startGame('horse-race')}>
             <h4>Pferderennen</h4>
           </GameLink>
         </section>
@@ -108,9 +118,9 @@ export default function Home() {
 
         <FlexSpacer />
 
-        <section className='highlight' onClick={() => null}>
+        {/*<section className='highlight' onClick={() => null}>
           Feedback - Unterstützen - Über mich
-        </section>
+        </section>*/}
 
         <FlexSpacer />
 
