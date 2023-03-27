@@ -1,8 +1,8 @@
-import React, { useContext, useRef } from 'react'
+import React, { useRef } from 'react'
 import { isNotPresent } from '../../lib/common/utils/types'
-import { NavigatorContext } from '../../App'
-import Button from '../../components/Button'
 import { Page } from '../../components/Page'
+import { Button } from '@mui/material'
+import useNavigation from '../../app/Navigation'
 
 interface Props {
   setBackgroundImageData: (data: string) => void
@@ -16,7 +16,7 @@ export default function Camera({ setBackgroundImageData }: Props) {
   const takePhotoButtonRef = useRef<HTMLButtonElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  const nav = useContext(NavigatorContext)
+  const { navigate } = useNavigation()
 
   const stopCamera = useRef<() => void>(() => null)
 
@@ -27,12 +27,11 @@ export default function Camera({ setBackgroundImageData }: Props) {
     if (isNotPresent(videoRef.current)) {
       return
     }
-    videoRef.current.srcObject = await navigator.mediaDevices.getUserMedia({
+    const video = videoRef.current
+    video.srcObject = await navigator.mediaDevices.getUserMedia({
       video: true,
       audio: false
     })
-
-    console.log('asdf')
 
     stopCamera.current = () => {
       const stream = videoRef.current?.srcObject as MediaStream
@@ -58,21 +57,28 @@ export default function Camera({ setBackgroundImageData }: Props) {
 
   function goBack() {
     stopCamera.current()
-    nav('horse-race')
+    navigate('horse-race')
   }
 
   return (
-    <Page style={{ flexDirection: 'column' }}>
-      <Button ref={startCameraButtonRef} onClick={startCamera}>Start
-        Camera</Button>
+    <Page>
+      <Button ref={startCameraButtonRef} variant='contained'
+              onClick={startCamera}>
+        Start Camera
+      </Button>
 
       <video ref={videoRef} className='camera' width='320' height='240'
-             autoPlay />
+             autoPlay muted playsInline />
 
-      <Button ref={takePhotoButtonRef} onClick={takePhoto}>Click Photo</Button>
+      <Button ref={takePhotoButtonRef} variant='contained'
+              onClick={takePhoto}>
+        Click Photo
+      </Button>
       <canvas ref={canvasRef} className='camera' width='320' height='240' />
 
-      <Button onClick={goBack}>Horse Race</Button>
+      <Button variant='contained' onClick={goBack}>
+        Horse Race
+      </Button>
     </Page>
   )
 }

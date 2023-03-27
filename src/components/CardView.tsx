@@ -3,7 +3,7 @@ import { Card } from '../model/Card'
 import { styled } from '@mui/material'
 import { isNotPresent } from '../lib/common/utils/types'
 import classNames from 'classnames'
-import { BackgroundImageDataContext } from '../App'
+import { BackgroundImageDataContext } from '../app/App'
 
 type Orientation = 0 | 90 | 180 | 270
 
@@ -76,7 +76,11 @@ export default function CardView({
                                    covered
                                  }: Props) {
 
-  const backgroundImageData = useContext(BackgroundImageDataContext)
+  let backgroundImageData = useContext(BackgroundImageDataContext)
+
+  if (isNotPresent(backgroundImageData) || backgroundImageData.length < 100) {
+    backgroundImageData = '/res/background.jpg'
+  }
 
   const backgroundImageStyle: CSSProperties = {
     backgroundImage: `url(${backgroundImageData})`

@@ -6,6 +6,7 @@ export const Page = styled('div')`
   overflow: hidden;
   padding: 16px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `

@@ -7,7 +7,9 @@ interface Props extends ChildrenProps {
   gridModel: GridModel,
   col: number,
   row: number,
-  zIndex?: number
+  zIndex?: number,
+  itemsX?: 'start' | 'center' | 'end',
+  itemsY?: 'start' | 'center' | 'end'
 }
 
 const Wrapper = styled('div')`
@@ -26,7 +28,9 @@ export default function GridCell({
                                    col,
                                    row,
                                    zIndex,
-                                   children
+                                   children,
+                                   itemsX,
+                                   itemsY
                                  }: Props) {
 
   function buildStyle(): CSSProperties {
@@ -42,6 +46,8 @@ export default function GridCell({
       width: `${width}px`,
       height: `${height}px`,
       transform: `translate(${x}px, ${y}px)`,
+      justifyContent: itemsX,
+      alignItems: itemsY,
       zIndex
     })
   }

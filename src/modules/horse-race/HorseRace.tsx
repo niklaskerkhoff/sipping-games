@@ -8,12 +8,10 @@ import CardConfettiExplosion from '../../components/CardConfettiExplosion'
 import { GameContentSizeContext } from '../../components/MainWrapper'
 import { Page } from '../../components/Page'
 import GridArea from '../../lib/react-common/grid/GridArea'
-
-interface Props {
-}
+import GameMenu from '../../components/GameMenu'
 
 
-export default function HorseRace({}: Props) {
+export default function HorseRace() {
 
   const sideCardCount = 7
   const rows = sideCardCount + 2
@@ -74,8 +72,14 @@ export default function HorseRace({}: Props) {
   }
 
   return (
-    <Page style={{ background: 'var(--primary)' }} onClick={next}>
+    <Page onClick={next}>
       <GridArea width={size.width} height={size.height}>
+        <GridCell col={0} row={rows - 1} gridModel={gridModel}
+                  itemsX='start' itemsY='start'>
+          <GameMenu onOpen={e => e.stopPropagation()}
+                    onClose={e => e.stopPropagation()} />
+        </GridCell>
+
         {Card.getColors().map((color, index) => (
 
           <GridCell key={index} gridModel={gridModel}
