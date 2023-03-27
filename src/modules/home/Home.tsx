@@ -9,7 +9,7 @@ interface Props {
 
 export default function Home({ navigate }: Props) {
   return (
-    <Page style={{background: '#007800'}}>
+    <Page style={{background: 'var(--primary)'}}>
       <span style={{flexGrow: 1}}></span>
       <h3>Willkommen bei</h3>
       <h1>Sipping Games</h1>

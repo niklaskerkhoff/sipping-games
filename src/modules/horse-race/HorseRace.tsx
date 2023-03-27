@@ -74,7 +74,7 @@ export default function HorseRace({}: Props) {
   }
 
   return (
-    <Page style={{ background: '#007800' }} onClick={next}>
+    <Page style={{ background: 'var(--primary)' }} onClick={next}>
       <GridArea width={size.width} height={size.height}>
         {Card.getColors().map((color, index) => (
 

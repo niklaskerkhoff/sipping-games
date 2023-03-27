@@ -3,6 +3,8 @@
     --safe-area-right: env(safe-area-inset-right);
     --safe-area-bottom: env(safe-area-inset-bottom);
     --safe-area-left: env(safe-area-inset-left);
+
+    --primary: #007800;
 }
 
 * {
@@ -16,7 +18,7 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #007800;
+    background-color: var(--primary);
 }
 
 code {
