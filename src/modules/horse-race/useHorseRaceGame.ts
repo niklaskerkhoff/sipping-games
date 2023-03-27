@@ -1,16 +1,21 @@
 import { useRef, useState } from 'react'
-import { HorseRaceGame } from './HorseRaceGame'
-import { Deck } from '../../model/Deck'
 import { Card } from '../../model/Card'
+import useCallOnce from '../../lib/react-common/hooks/useCallOnce'
+import { HorseRaceGameContainer } from './HorseRaceGameContainer'
 
 export default function useHorseRaceGame(sideCardCount: number) {
-  const game = useRef(new HorseRaceGame(new Deck(), sideCardCount)).current
+  const game = useRef(HorseRaceGameContainer.get()).current
+  console.log(game.random)
 
   const [progress, setProgress] = useState(game.progress)
   const [forwardCardsOpenedCount, setForwardCardsOpenedCount] = useState(game.forwardCardsOpenedCount)
   const [sideCardsOpenedCount, setSideCardsOpenedCount] = useState(game.sideCardsOpenedCount)
   const [finished, setFinished] = useState(Card.mapColorsToDefault(false))
   const canDoNext = useRef(true)
+
+  useCallOnce(() => {
+    // console.log(game.forwardCards)
+  })
 
   function next() {
     if (!canDoNext.current) {

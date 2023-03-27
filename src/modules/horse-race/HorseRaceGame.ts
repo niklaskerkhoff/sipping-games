@@ -9,11 +9,13 @@ export class HorseRaceGame {
   public readonly sideCards: Card[]
   public sideCardsOpenedCount = 0
   public readonly forwardCards: Card[]
+  public readonly random = Math.random()
 
   constructor(
     private readonly deck: Deck,
     sideCardCount: number
   ) {
+    console.log('game')
     Card.getColors().forEach(color => deck.remove(new Card('A', color)))
     this.sideCards = range(0, sideCardCount).map(() => deck.draw())
     this.forwardCards = deck.cards
@@ -40,7 +42,9 @@ export class HorseRaceGame {
       return
     }
 
-    const color = this.deck.draw().color
+    const card = this.deck.draw()
+    // console.log(card)
+    const color = card.color
     this._forwardCardsOpenedCount++
     this.progress[color] = this.getMovedForward(color)
   }
